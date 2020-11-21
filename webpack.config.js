@@ -44,8 +44,5 @@ module.exports = {
     //opens in default browser
     open: true,
     watchContentBase: true
-  },
-  resolve: {
-    extensions: [".wasm", ".ts", ".tsx", ".mjs", ".cjs", ".js", ".json"],
-  },
+  }
 }
