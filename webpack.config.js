@@ -41,8 +41,9 @@ module.exports = {
     })
   ],
   devServer: {
+    //opens in default browser
     open: true,
-    contentBase: path.resolve(__dirname, 'client/dist')
+    watchContentBase: true
   },
   resolve: {
     extensions: [".wasm", ".ts", ".tsx", ".mjs", ".cjs", ".js", ".json"],

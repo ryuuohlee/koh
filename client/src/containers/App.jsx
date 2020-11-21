@@ -1,10 +1,14 @@
 import React from 'react';
+import Navigation from '../components/Navigation/Navigation.jsx';
 
 class App extends React.Component {
   render() {
     return(
-      <div>
-        <h1>Koh</h1>
+      <div className='App'>
+        <Navigation />
+       {/* { <Logo />
+        <ImageLinkForm />
+        <FaceRecognition />} */}
       </div>
     )
   }
