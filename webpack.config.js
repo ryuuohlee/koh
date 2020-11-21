@@ -2,9 +2,9 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: './client/src/index.jsx',
+  entry: `${__dirname}/client/src/index.jsx`,
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: path.resolve(__dirname, '/client/dist'),
     publicPath: '/',
     filename: 'koh_bundle.js'
   },
@@ -35,8 +35,9 @@ module.exports = {
     ]
   },
   plugins: [
+    //creates the index.html file for you using the template you chose
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: './client/src/index.html'
     })
   ]
 }
