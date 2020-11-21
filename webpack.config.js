@@ -2,16 +2,16 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-  entry: `${__dirname}/client/src/index.jsx`,
+  entry: './client/src/index.jsx',
   output: {
-    path: path.resolve(__dirname, '/client/dist'),
+    path: path.resolve(__dirname, 'client/dist'),
     publicPath: '/',
     filename: 'koh_bundle.js'
   },
   module: {
     rules: [
       {
-        test: /\,jsx$/,
+        test: /\.jsx$/i,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
@@ -39,5 +39,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './client/src/index.html'
     })
-  ]
+  ],
+  devServer: {
+    open: true,
+    contentBase: path.resolve(__dirname, 'client/dist')
+  },
+  resolve: {
+    extensions: [".wasm", ".ts", ".tsx", ".mjs", ".cjs", ".js", ".json"],
+  },
 }
