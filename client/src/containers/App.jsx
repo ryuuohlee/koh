@@ -1,5 +1,6 @@
 import React from 'react';
 import Navigation from '../components/Navigation/Navigation.jsx';
+import 'tachyons';
 
 class App extends React.Component {
   render() {
