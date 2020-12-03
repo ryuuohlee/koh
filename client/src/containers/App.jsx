@@ -31,16 +31,39 @@ const particlesOptions = {
 }
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
     this.state = {
       input: '',
-      imgUrl: ''
+      imgUrl: '',
+      box: {},
     }
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onButtonSubmit = this.onButtonSubmit.bind(this);
+    //this.calculateFaceLocation = this.calculateFaceLocation.bind(this);
+    this.displayFaceBox = this.displayFaceBox.bind(this);
+  }
+
+  calculateFaceLocation = (data) => {
+    console.log(data)
+    const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
+    const image = document.getElementById('inputImage')
+    const width = Number(image.width);
+    const height = Number(image.height);
+    console.log(width, height);
+    return {
+      leftCol: clarifaiFace.left_col * width,
+      topRow: clarifaiFace.top_row * height,
+      rightCol: width - (clarifaiFace.right_col * width),
+      bottomRow: height - (clarifaiFace.bottom_row * height)
+    };
+  }
+
+  displayFaceBox(box) {
+    console.log(box)
+    this.setState({ box: box });
   }
 
   onInputChange(event) {
@@ -48,21 +71,25 @@ class App extends React.Component {
   }
 
   onButtonSubmit() {
-    console.log(this.state.input)
-    this.setState({ imgUrl: this.state.input });
-    app.models
+    this.setState({ imgUrl: this.state.input }, function(){
+      app.models
     .predict(
       Clarifai.FACE_DETECT_MODEL,
       this.state.imgUrl)
       .then(
-      function(response) {
-        // do something with response
-        console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
-      },
-      function(err) {
-        // there was an error
-      }
-    );
+          function(response) {
+          // do something with response
+          //this.displayFaceBox(this.calculateFaceLocation(response));
+          this.calculateFaceLocation(response)
+          // console.log(response.outputs[0].data.regions[0].region_info.bounding_box);
+        }
+      )
+      .catch(
+        function(err) {
+          // there was an error
+          console.log(err)
+        });
+      });
   }
 
   render() {
