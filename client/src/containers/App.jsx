@@ -3,6 +3,7 @@ import React from 'react';
 import Clarifai from 'clarifai';
 import Particles from 'react-particles-js';
 import Navigation from '../components/Navigation/Navigation.jsx';
+import Signin from '../components/Signin/Signin.jsx';
 import FaceRecognition from '../components/FaceRecognition/FaceRecognition.jsx';
 import Logo from '../components/Logo/Logo.jsx';
 import Rank from '../components/Rank/Rank.jsx';
@@ -38,6 +39,7 @@ class App extends React.Component {
       input: '',
       imgUrl: '',
       box: {},
+      route: 'signin'
     }
 
   }
@@ -81,13 +83,19 @@ class App extends React.Component {
           params={particlesOptions}
          />
         <Navigation />
-        <Logo />
-        <Rank />
-        <ImageLinkForm
-          onInputChange={this.onInputChange}
-          onButtonSubmit={this.onButtonSubmit}
-        />
-        <FaceRecognition box={this.state.box} imgUrl={this.state.input}/>
+        { this.state.route === 'signin'
+          ? <Signin />
+          : <div>
+              <Logo />
+              <Rank />
+              <ImageLinkForm
+                onInputChange={this.onInputChange}
+                onButtonSubmit={this.onButtonSubmit}
+              />
+              <FaceRecognition box={this.state.box} imgUrl={this.state.input}/>
+            </div>
+        }
+
       </div>
     )
   }
