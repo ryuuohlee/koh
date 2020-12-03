@@ -42,11 +42,11 @@ class App extends React.Component {
 
     this.onInputChange = this.onInputChange.bind(this);
     this.onButtonSubmit = this.onButtonSubmit.bind(this);
-    //this.calculateFaceLocation = this.calculateFaceLocation.bind(this);
+    this.calculateFaceLocation = this.calculateFaceLocation.bind(this);
     this.displayFaceBox = this.displayFaceBox.bind(this);
   }
 
-  calculateFaceLocation = (data) => {
+  calculateFaceLocation(data) {
     console.log(data)
     const clarifaiFace = data.outputs[0].data.regions[0].region_info.bounding_box;
     const image = document.getElementById('inputImage')
@@ -71,7 +71,7 @@ class App extends React.Component {
   }
 
   onButtonSubmit() {
-    this.setState({ imgUrl: this.state.input }, function(){
+    this.setState({ imgUrl: this.state.input }, () => {
       app.models
     .predict(
       Clarifai.FACE_DETECT_MODEL,
