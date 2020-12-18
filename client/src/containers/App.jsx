@@ -43,7 +43,6 @@ class App extends React.Component {
       route: 'signin',
       isSignedIn: false
     }
-
   }
 
   calculateFaceLocation = (data) => {
