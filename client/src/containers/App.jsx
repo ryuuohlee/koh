@@ -55,11 +55,13 @@ class App extends React.Component {
 
   loadUser = (user) => {
     this.setState({
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      entries: user.entries,
-      joined: user.joined
+      user:{
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        entries: user.entries,
+        joined: user.joined
+      }
     })
   }
 
@@ -85,14 +87,28 @@ class App extends React.Component {
   }
 
   onButtonSubmit = () => {
-    this.setState({ imgUrl: this.state.input }, function() {
-      app.models
-    .predict(
-      Clarifai.FACE_DETECT_MODEL,
-      this.state.imgUrl)
-      .then(response => this.displayFaceBox(this.calculateFaceLocation(response)))
-      .catch(err => console.log(err));
-      });
+    this.setState({ imgUrl: this.state.input });
+    app.models
+      .predict(
+        Clarifai.FACE_DETECT_MODEL,
+        this.state.input)
+        .then(response => {
+          if(response) {
+            fetch('http://localhost:3000/image',{
+              method: 'put',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({
+                id: this.state.user.id
+              })
+            })
+            .then(response => response.json())
+            .then(count => {
+              this.setState(Object.assign(this.state.user, { entries: count }))
+            })
+          }
+          this.displayFaceBox(this.calculateFaceLocation(response))
+        })
+        .catch(err => console.log(err));
   }
 
   onRouteChange = (route) => {
@@ -106,7 +122,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { input, imgUrl, box, route, isSignedIn } = this.state;
+    const { input, imgUrl, box, route, isSignedIn, user } = this.state;
     return(
       <div className='App'>
          <Particles className="particles"
@@ -117,8 +133,8 @@ class App extends React.Component {
           ? <div>
               <Logo />
               <Rank
-                name={this.state.user.name}
-                entries={this.state.user.entries}
+                name={user.name}
+                entries={user.entries}
               />
               <ImageLinkForm
                 onInputChange={this.onInputChange}
