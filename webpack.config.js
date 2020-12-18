@@ -1,6 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
+const { SourceMapDevToolPlugin } = require('webpack');
 
 module.exports = {
   entry: './client/src/index.jsx',
@@ -32,6 +33,11 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: 'file-loader',
+      },
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        use: ['source-map-loader']
       }
     ]
   },
@@ -42,16 +48,14 @@ module.exports = {
     }),
     new webpack.ProvidePlugin({
       process: 'process/browser',
+    }),
+    new SourceMapDevToolPlugin({
+      filename: "[file].map"
     })
   ],
   devServer: {
     //opens in default browser
     open: true,
     watchContentBase: true
-  },
-  // resolve: {
-  //   fallback: {
-  //     "path": false,
-  //   }
-  // }
+  }
 }
