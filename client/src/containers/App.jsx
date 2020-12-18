@@ -41,8 +41,26 @@ class App extends React.Component {
       imgUrl: '',
       box: {},
       route: 'signin',
-      isSignedIn: false
+      isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        entries: 0,
+        joined: ''
+
+      }
     }
+  }
+
+  loadUser = (user) => {
+    this.setState({
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      entries: user.entries,
+      joined: user.joined
+    })
   }
 
   calculateFaceLocation = (data) => {
@@ -98,7 +116,10 @@ class App extends React.Component {
         { this.state.route === 'home'
           ? <div>
               <Logo />
-              <Rank />
+              <Rank
+                name={this.state.user.name}
+                entries={this.state.user.entries}
+              />
               <ImageLinkForm
                 onInputChange={this.onInputChange}
                 onButtonSubmit={this.onButtonSubmit}
@@ -107,8 +128,14 @@ class App extends React.Component {
             </div>
           : (
             this.state.route === 'signin'
-            ? <Signin onRouteChange={this.onRouteChange} />
-            : <Register onRouteChange={this.onRouteChange} />
+            ? <Signin
+                loadUser={this.loadUser}
+                onRouteChange={this.onRouteChange}
+              />
+            : <Register
+                loadUser={this.loadUser}
+                onRouteChange={this.onRouteChange}
+              />
           )
         }
 
