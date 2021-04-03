@@ -86,6 +86,7 @@ class App extends React.Component {
     this.setState({ input: event.target.value })
   }
 
+  //button will submit a link for face detection
   onButtonSubmit = () => {
     this.setState({ imgUrl: this.state.input });
     app.models
