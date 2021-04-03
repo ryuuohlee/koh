@@ -32,6 +32,22 @@ const particlesOptions = {
   }
 }
 
+const initialState = {
+  input: '',
+  imgUrl: '',
+  box: {},
+  route: 'signin',
+  isSignedIn: false,
+  user: {
+    id: '',
+    name: '',
+    email: '',
+    entries: 0,
+    joined: ''
+
+  }
+}
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -89,10 +105,14 @@ class App extends React.Component {
   //button will submit a link for face detection
   onButtonSubmit = () => {
     this.setState({ imgUrl: this.state.input });
-    app.models
-      .predict(
-        Clarifai.FACE_DETECT_MODEL,
-        this.state.input)
+    fetch('http://localhost:3000/imageUrl',{
+      method: 'post',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        input: this.state.input
+      })
+    })
+      .then(response => response.json())
         .then(response => {
           if(response) {
             fetch('http://localhost:3000/image',{
@@ -106,6 +126,7 @@ class App extends React.Component {
             .then(count => {
               this.setState(Object.assign(this.state.user, { entries: count }))
             })
+            .catch(console.log);
           }
           this.displayFaceBox(this.calculateFaceLocation(response))
         })
@@ -114,7 +135,7 @@ class App extends React.Component {
 
   onRouteChange = (route) => {
     if(route === 'signout') {
-      this.setState({ isSignedIn: false })
+      this.setState(initialState)
     }
     else if (route === 'home') {
       this.setState({ isSignedIn: true })
@@ -124,6 +145,7 @@ class App extends React.Component {
 
   render() {
     const { input, imgUrl, box, route, isSignedIn, user } = this.state;
+    console.log(isSignedIn);
     return(
       <div className='App'>
          <Particles className="particles"
