@@ -1,4 +1,3 @@
-//require('dotenv').config();
 import React from 'react';
 import Clarifai from 'clarifai';
 import Particles from 'react-particles-js';

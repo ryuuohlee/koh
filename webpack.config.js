@@ -7,7 +7,6 @@ module.exports = {
   entry: './client/src/index.jsx',
   output: {
     path: path.resolve(__dirname, 'client/dist'),
-    publicPath: '/',
     filename: 'koh_bundle.js'
   },
   module: {
