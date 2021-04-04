@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve --mode development --hot",
+    "start": "serve -s build",
+    "start:dev": "webpack serve --mode development --hot",
     "build": "webpack --mode production"
   },
   "repository": {
@@ -40,6 +41,7 @@
     "react-dom": "^17.0.1",
     "react-particles-js": "^3.4.1",
     "react-tilt": "^0.1.4",
+    "serve": "^11.3.2",
     "tachyons": "^4.12.0"
   },
   "browser": {
