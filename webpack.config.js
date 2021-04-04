@@ -4,9 +4,9 @@ var webpack = require('webpack');
 const { SourceMapDevToolPlugin } = require('webpack');
 
 module.exports = {
-  entry: './client/src/index.jsx',
+  entry: './src/index.jsx',
   output: {
-    path: path.resolve(__dirname, 'client/dist'),
+    path: path.resolve(__dirname, 'dist'),
     publicPath: '/',
     filename: 'koh_bundle.js'
   },
@@ -44,7 +44,7 @@ module.exports = {
   plugins: [
     //creates the index.html file for you using the template you chose
     new HtmlWebpackPlugin({
-      template: './client/src/index.html'
+      template: './src/index.html'
     }),
     new webpack.ProvidePlugin({
       process: 'process/browser',
