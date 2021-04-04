@@ -1,19 +1,19 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 var webpack = require('webpack');
-const { SourceMapDevToolPlugin } = require('webpack');
+//const { SourceMapDevToolPlugin } = require('webpack');
 
 module.exports = {
   entry: './src/index.jsx',
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    publicPath: '/dist/',
+    path: path.join(__dirname, 'dist'),
+    publicPath: '/',
     filename: 'koh_bundle.js'
   },
   module: {
     rules: [
       {
-        test: /\.jsx$/i,
+        test: /\.jsx$/,
         exclude: /node_modules/,
         loader: 'babel-loader',
         options: {
@@ -33,11 +33,6 @@ module.exports = {
       {
         test: /\.(png|svg|jpg|gif)$/,
         use: 'file-loader',
-      },
-      {
-        test: /\.js$/,
-        enforce: 'pre',
-        use: ['source-map-loader']
       }
     ]
   },
@@ -49,13 +44,14 @@ module.exports = {
     new webpack.ProvidePlugin({
       process: 'process/browser',
     }),
-    new SourceMapDevToolPlugin({
-      filename: "[file].map"
-    })
+    // new SourceMapDevToolPlugin({
+    //   filename: "[file].map"
+    // })
   ],
   devServer: {
     //opens in default browser
     open: true,
-    watchContentBase: true
+    watchContentBase: true,
+    historyApiFallback: true
   }
 }
