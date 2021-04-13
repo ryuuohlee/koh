@@ -8,6 +8,7 @@
     "start:dev": "webpack serve --mode development --hot",
     "build": "webpack --mode production",
     "deploy": "gh-pages -d dist",
+    "heroku-postbuild": "npm install && npm install --only=dev --no-shrinkwrap",
     "postinstall": "npm run build"
   },
   "repository": {
