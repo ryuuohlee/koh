@@ -144,7 +144,6 @@ class App extends React.Component {
 
   render() {
     const { input, imgUrl, box, route, isSignedIn, user } = this.state;
-    console.log(isSignedIn);
     return(
       <div className='App'>
          <Particles className="particles"
