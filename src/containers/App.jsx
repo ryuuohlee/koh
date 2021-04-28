@@ -11,10 +11,6 @@ import ImageLinkForm from '../components/ImageLinkForm/ImageLinkForm.jsx';
 import './App.css';
 import 'tachyons';
 
-const app = new Clarifai.App({
-  apiKey: '8d9808a321e24c99a10fc32bd8b24d48'
- });
-
 const particlesOptions = {
   particles: {
     number: {
